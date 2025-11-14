@@ -2,10 +2,9 @@
   "name": "whaileys-api",
   "version": "1.0.0",
   "description": "REST API for Whaileys WhatsApp",
-  "main": "dist/server.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "build": "prisma generate && tsc",
-    "start": "node dist/server.js",
+    "start": "ts-node src/server.ts",
     "dev": "ts-node src/server.ts"
   },
   "dependencies": {
@@ -17,15 +16,13 @@
     "redis": "^4.6.10",
     "pino": "^8.16.2",
     "qrcode": "^1.5.3",
-    "@hapi/boom": "^10.0.1"
-  },
-  "devDependencies": {
+    "@hapi/boom": "^10.0.1",
+    "typescript": "^5.2.2",
+    "ts-node": "^10.9.1",
+    "prisma": "^5.22.0",
     "@types/express": "^4.17.20",
     "@types/cors": "^2.8.15",
     "@types/node": "^20.9.0",
-    "@types/qrcode": "^1.5.5",
-    "typescript": "^5.2.2",
-    "ts-node": "^10.9.1",
-    "prisma": "^5.22.0"
+    "@types/qrcode": "^1.5.5"
   }
 }

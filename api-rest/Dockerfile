@@ -4,32 +4,22 @@ RUN apk add --no-cache ffmpeg wget curl python3 make g++ git
 
 WORKDIR /app
 
-# Instala a biblioteca Whaileys diretamente do GitHub
-RUN npm install github:canove/whaileys
-
-# Copia os arquivos da API
+# Copia tudo
 COPY package*.json ./
 COPY tsconfig.json ./
 COPY prisma ./prisma/
+COPY src ./src/
 
-# Remove a dependência whaileys do package.json temporariamente
-RUN npm pkg delete dependencies.whaileys
-
-# Instala as outras dependências
+# Instala TUDO de uma vez
 RUN npm install
 
-# Gera o Prisma Client
+# Gera Prisma Client
 RUN npx prisma generate
-
-# Copia o código fonte
-COPY src ./src
-
-# Compila o TypeScript
-RUN npm run build
 
 # Cria diretório para sessões
 RUN mkdir -p /app/auth_sessions
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+# Roda direto com ts-node (sem compilar)
+CMD ["npx", "ts-node", "src/server.ts"]
