@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id            String   @id @default(uuid())
+  sessionId     String   @unique
+  name          String?
+  number        String?
+  status        String   @default("disconnected")
+  qrCode        String?  @db.Text
+  isConnected   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastConnected DateTime?
+
+  @@map("sessions")
+}
+
+model Message {
+  id            String   @id @default(uuid())
+  sessionId     String
+  messageId     String
+  remoteJid     String
+  fromMe        Boolean
+  messageType   String
+  content       String?  @db.Text
+  timestamp     DateTime
+  status        String?
+  createdAt     DateTime @default(now())
+
+  @@unique([sessionId, messageId])
+  @@index([sessionId])
+  @@index([remoteJid])
+  @@map("messages")
+}
+
+model Contact {
+  id        String   @id @default(uuid())
+  sessionId String
+  jid       String
+  name      String?
+  notify    String?
+  verifiedName String?
+  imgUrl    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sessionId, jid])
+  @@index([sessionId])
+  @@map("contacts")
+}
