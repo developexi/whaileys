@@ -1,16 +1,27 @@
-FROM node:18-alpine
+FROM node:18-slim
 
-RUN apk add --no-cache ffmpeg wget curl python3 make g++ git openssl1.1-compat
+# Instala dependências do sistema
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    wget \
+    curl \
+    python3 \
+    make \
+    g++ \
+    git \
+    openssl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copia tudo
+# Copia arquivos de configuração
 COPY package*.json ./
 COPY tsconfig.json ./
 COPY prisma ./prisma/
 COPY src ./src/
 
-# Instala TUDO de uma vez
+# Instala dependências
 RUN npm install
 
 # Gera Prisma Client
@@ -21,5 +32,5 @@ RUN mkdir -p /app/auth_sessions
 
 EXPOSE 3000
 
-# Roda direto com ts-node (sem compilar)
+# Roda com ts-node
 CMD ["npx", "ts-node", "src/server.ts"]
