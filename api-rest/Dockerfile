@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-RUN apk add --no-cache ffmpeg wget curl python3 make g++ git
+RUN apk add --no-cache ffmpeg wget curl python3 make g++ git openssl1.1-compat
 
 WORKDIR /app
 
