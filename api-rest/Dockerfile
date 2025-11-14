@@ -20,6 +20,10 @@ COPY package*.json ./
 COPY tsconfig.json ./
 COPY prisma ./prisma/
 COPY src ./src/
+COPY docker-entrypoint.sh ./
+
+# Torna o script executável
+RUN chmod +x docker-entrypoint.sh
 
 # Instala dependências
 RUN npm install
@@ -32,5 +36,5 @@ RUN mkdir -p /app/auth_sessions
 
 EXPOSE 3000
 
-# Roda com ts-node
-CMD ["npx", "ts-node", "src/server.ts"]
+# Roda com ts-node via entrypoint
+ENTRYPOINT ["./docker-entrypoint.sh"]
