@@ -5,6 +5,7 @@ import routes from './routes';
 import prisma from './database';
 import { connectRedis } from './redis';
 import { initializeSession } from './whatsapp';
+import { authMiddleware } from './auth';
 
 dotenv.config();
 
@@ -14,6 +15,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware de autenticação (protege todas as rotas /api/*)
+app.use(authMiddleware);
 
 app.use('/api', routes);
 
