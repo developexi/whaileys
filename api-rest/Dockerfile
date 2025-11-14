@@ -15,6 +15,10 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
+# Define a plataforma do Prisma para Debian
+ENV PRISMA_QUERY_ENGINE_LIBRARY=/app/node_modules/.prisma/client/libquery_engine-debian-openssl-3.0.x.so.node
+ENV PRISMA_CLI_BINARY_TARGETS=debian-openssl-3.0.x
+
 # Copia arquivos de configuração
 COPY package*.json ./
 COPY tsconfig.json ./
