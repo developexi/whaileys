@@ -2,14 +2,14 @@
   "name": "whaileys-api",
   "version": "1.0.0",
   "description": "REST API for Whaileys WhatsApp",
-  "main": "dist/server.js",
+  "main": "dist/server.ts",
   "scripts": {
     "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "dev": "ts-node src/server.ts"
   },
   "dependencies": {
-    "whaileys": "^1.0.0",
+    "whaileys": "github:canove/whaileys",
     "@prisma/client": "^5.22.0",
     "express": "^4.18.2",
     "cors": "^2.8.5",
